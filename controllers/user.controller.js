@@ -90,6 +90,18 @@ const orderById = catchAsync(
     }
 );
 
+const getUsers = catchAsync(
+    
+    async (req,res,next) => {
+        
+        const users = await User.findAll();
+
+        res.status(200).json({
+            status:"succes",
+            users
+        })
+    }
+);
 
 module.exports = {
     signup,
@@ -98,5 +110,6 @@ module.exports = {
     updateUser,
     deleteUser,
     myOrders,
-    orderById
+    orderById,
+    getUsers
 }
