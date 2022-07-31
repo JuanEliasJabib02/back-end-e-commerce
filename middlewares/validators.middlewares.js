@@ -30,5 +30,21 @@ const createUserValidator = [
     checkResult,
 ]
 
+const newProductValidator = [
+
+    body('title').notEmpty().withMessage('Title cant be empty'),
+    body('description').notEmpty().withMessage('description cant be empty'),
+    body('price')
+      .isFloat({ min: 0 })
+      .withMessage('Price must be greater than 0'),
+    body('quantity')
+      .isInt({ min: 1 })
+      .withMessage('Quantity must be greater than 0'),
+    body('categoryId')
+      .isInt({ min: 1 })
+      .withMessage('Must provide a valid category'),
+      
+      checkResult
+]
   
-module.exports = { createUserValidator }
+module.exports = { createUserValidator, newProductValidator }

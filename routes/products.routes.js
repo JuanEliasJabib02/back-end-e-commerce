@@ -14,6 +14,7 @@ const {newProduct, getProducts, getProductById, updateProduct, deleteProduct } =
 
 const { authJWT, isAdmin } = require('../middlewares/auth.middleware');
 const { productExists } = require('../middlewares/products.middleware');
+const { newProductValidator } = require('../middlewares/validators.middlewares');
 
 
 
@@ -48,6 +49,7 @@ productsRouter.patch('/categories/:id',
 productsRouter.post('/',
     authJWT,
     isAdmin,
+    newProductValidator,
     newProduct
 );
 

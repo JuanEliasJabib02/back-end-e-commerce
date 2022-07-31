@@ -17,7 +17,7 @@ const newCategory = catchAsync(
         const { name  } = req.body
 
         if (name.length === 0) {
-            return next(new AppError('Name cannot be empty', 400));
+            return next(new AppError('Name cant be empty', 400));
         }
 
         const category = await Category.create({
