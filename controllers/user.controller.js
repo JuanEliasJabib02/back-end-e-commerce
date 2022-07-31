@@ -1,6 +1,8 @@
 
 //Libraries 
 const bcrypt = require('bcryptjs'); // Sirve para encriptar la contraseña
+const jwt = require('jsonwebtoken') // -> Esta libreria nos permite dar el token que sera con el que realizaremos la autentificazion
+
 
 
 //Models
@@ -13,6 +15,7 @@ const { User } = require('../models/users.model');
 
 const { catchAsync } = require("../utils/catchAsync");
 const { Email } = require('../utils/email.util');
+const { AppError } = require('../utils/appError');
 
 
 
@@ -20,11 +23,11 @@ const signup = catchAsync(
     // user validator -> DONE
     // Hash password and remove from response -> DONE
     // create new User -> DONE
-    // Send welcome email
+    // Send welcome email -> DONE
 
     async (req,res,next) => {
         
-        const {username, email, password,} = req.body;
+        const {username, email, password, } = req.body;
 
         const salt = await bcrypt.genSalt(12);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -32,7 +35,7 @@ const signup = catchAsync(
         const newUser = await User.create({
             username,
             email,
-            password: hashPassword
+            password: hashPassword,
         })
 
         newUser.password = undefined; // Es de buena practica no enviar la contraseña en la respuesta aunque este escriptada
@@ -55,7 +58,42 @@ const signup = catchAsync(
 const login = catchAsync(
     
     async (req,res,next) => {
+        // 1. get email and password from client
+        const {email, password} = req.body;
 
+        //2. validate email and password
+
+        const user = await User.findOne({
+            where:{
+                email,
+                status:"active"
+            }
+        })
+
+        if (!user) {
+            return next(new AppError('email & password fail'),400);
+        }
+
+        const passOkay = await bcrypt.compare(password, user.password)
+
+        if(!passOkay) {
+            return next( new AppError(' email & password fail', 400))
+         }
+
+         const token = jwt.sign(
+            {
+                id: user.id
+            },
+            process.env.JWT_SIGN,
+            {
+                expiresIn:"1d"
+            }
+         )
+
+         res.status(200).json({
+            status:"succes",
+            token
+         })
     }
 );
 

@@ -26,6 +26,11 @@ const User = db.define('user',{
         type: DataTypes.STRING,
         defaultValue:"client",
         allowNull:true
+    },
+    status:{
+        type: DataTypes.STRING,
+        defaultValue:"active",
+        allowNull:true
     }
 
 })

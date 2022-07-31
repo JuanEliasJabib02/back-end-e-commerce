@@ -1,7 +1,7 @@
 const express = require('express');
 
 // Controllers
-const { signup , getUsers} = require('../controllers/user.controller');
+const { signup , getUsers, login} = require('../controllers/user.controller');
 
 
 //Middlewares
@@ -18,6 +18,15 @@ usersRouter.post('/',
     createUserValidator,
     signup
 );
+
+usersRouter.post('/login', 
+    login
+);
+
+
+
+
+
 
 
 
