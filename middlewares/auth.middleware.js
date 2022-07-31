@@ -40,13 +40,26 @@ const authJWT = catchAsync(
         if(!userActive) {
             return next(new AppError("The owner of this token dont exist anymore", 403))
         }
-        console.log(`UserActive ID: ${userActive.id}`)
-        req.userActive = decoded.id; /* Para extraer el id del usuario */
+        req.userActive = userActive; /* Para extraer el id del usuario */
 
         
         next();
        }
 )
 
+// para saber si es el dueño de la cuenta 
+const userAccount = catchAsync(
 
-module.exports = { authJWT }
+    async (req,res,next) => {
+        const {userActive, user} = req;
+
+        if(userActive.id !== user.id){
+            return next( new AppError ('This account dont belong to you',403))
+         }
+        next();
+    }
+)
+
+
+
+module.exports = { authJWT, userAccount }

@@ -16,6 +16,7 @@ const { User } = require('../models/users.model');
 const { catchAsync } = require("../utils/catchAsync");
 const { Email } = require('../utils/email.util');
 const { AppError } = require('../utils/appError');
+const { response } = require('express');
 
 
 
@@ -107,13 +108,36 @@ const getUserProducts = catchAsync(
 const updateUser = catchAsync(
     //Only username and Email
     async (req,res,next) => {
-        console.log("updateuser")
+
+       const { userActive } = req;
+
+       const { username, email } =req.body;
+
+       await userActive.update({
+            username,
+            email,
+       })
+        
+       res.status(200).json({
+            status:"succes"
+       })
+        
     }
 );
 
 const deleteUser = catchAsync(
     //Soft Delete
     async (req,res,next) => {
+        console.log("deleted")
+
+        
+         /* Tecnica soft delete */
+       const { userActive } = req; // Viene desde el middleware
+        
+       await userActive.update ({status:'disabled'});
+   
+       res.status(204).json({status:'sucess'});
+
 
     }
 );

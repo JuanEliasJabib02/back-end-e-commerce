@@ -1,8 +1,9 @@
 const express = require('express');
 
 // Controllers
-const { signup , getUsers, login, updateUser} = require('../controllers/user.controller');
-const { authJWT } = require('../middlewares/auth.middleware');
+const { signup , getUsers, login, updateUser, deleteUser} = require('../controllers/user.controller');
+const { authJWT, userAccount } = require('../middlewares/auth.middleware');
+const { userExist } = require('../middlewares/users.middleware');
 
 
 //Middlewares
@@ -26,9 +27,19 @@ usersRouter.post('/login',
 
 
 usersRouter.patch('/:id',
+    userExist,
     authJWT,
+    userAccount,
     updateUser
 );
+
+usersRouter.delete('/:id',
+    userExist,
+    authJWT,
+    userAccount,
+    deleteUser
+);
+
 
 
 
