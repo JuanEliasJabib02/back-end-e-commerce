@@ -35,20 +35,17 @@ productsRouter.get('/categories',
 
 productsRouter.post('/categories',
     authJWT,
-    isAdmin,
     newCategory
 );
 
 productsRouter.patch('/categories/:id',
     authJWT,
-    isAdmin,
     updateCategory
 )
 
 
 productsRouter.post('/',
     authJWT,
-    isAdmin,
     newProductValidator,
     newProduct
 );

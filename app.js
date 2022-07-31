@@ -26,6 +26,7 @@ const { usersRouter } = require('./routes/users.routes');
 
 const { viewsRouter } = require('./routes/views.routes');
 const { productsRouter } = require('./routes/products.routes');
+const { cartRouter} = require('./routes/cart.routes.js')
 
 
 // Add security headers
@@ -45,6 +46,8 @@ app.use('/', viewsRouter)
 app.use('/api/v1/users', usersRouter );
 
 app.use('/api/v1/products', productsRouter);
+
+app.use('/api/v1/cart', cartRouter );
 
 app.all('*',(req,res,next) => {
     next( new AppError (`${req.method} ${req.url} not found in this server`),404 )

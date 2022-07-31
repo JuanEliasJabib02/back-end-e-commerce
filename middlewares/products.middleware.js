@@ -6,9 +6,8 @@ const { catchAsync } = require("../utils/catchAsync");
 const productExists = catchAsync(
     async (req,res,next) => {
         
-        const {id} = req.params; 
+        const { id } = req.params; 
       
-
         const product = await Product.findOne({
             where:{
                 status:"avalaible",
