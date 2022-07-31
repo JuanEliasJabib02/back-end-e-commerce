@@ -8,8 +8,8 @@ class Email {
             host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
-            user: "e1a4d55c5b9acd",
-            pass: "b8f10e1115a0c4",
+            user: process.env.MAILTRAP_USER,
+            pass:process.env.MAILTRAP_PASSWORD,
             },
         });
     }
