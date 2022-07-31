@@ -37,7 +37,8 @@ const signup = catchAsync(
 
         newUser.password = undefined; // Es de buena practica no enviar la contraseña en la respuesta aunque este escriptada
 
-        new Email().sendWelcome();
+    
+        await new Email(email).sendWelcome(username);//Para pasarle dinamicamente el nombre a sendWelcome 
 
         res.status(200).json({
             status:"succes",
