@@ -37,7 +37,7 @@ const signup = catchAsync(
 
         newUser.password = undefined; // Es de buena practica no enviar la contraseña en la respuesta aunque este escriptada
 
-        new Email().send();
+        new Email().sendWelcome();
 
         res.status(200).json({
             status:"succes",

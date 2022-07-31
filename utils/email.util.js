@@ -7,7 +7,7 @@ const { htmlToText } = require('html-to-text');
 dotenv.config({ path: './config.env' });
 
 class Email {
-	constructor() {}
+	constructor(template) {}
 
 	// Connect to mail service
 	newTransport() {
@@ -22,11 +22,11 @@ class Email {
 	}
 
 	// Send welcome email to user controller for createUser
-	async send() {
+	async send(template) {
 
         // What data should
 		const html = pug.renderFile(
-			path.join(__dirname, '..', 'views', 'emails', 'base.pug'),
+			path.join(__dirname, '..', 'views', 'emails', `${template}`),
 			{
 				title: 'My first mail',
 			}
@@ -41,6 +41,16 @@ class Email {
 			text: htmlToText(html), // nodemail need this for woork good
 		});
 	}
+
+
+    // Templates a enviar
+    async sendWelcome(){
+        await this.send('welcome.pug');
+    }
+
+    async sendWelcome(){
+        await this.send('welcome.pug');
+    }
 }
 
 module.exports = { Email };
