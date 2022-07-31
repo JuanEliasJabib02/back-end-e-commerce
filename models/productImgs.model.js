@@ -1,9 +1,8 @@
 const { db , DataTypes } = require('../utils/db.util');
 
 
-const productImg = db.define('productImg',{
+const ProductImg = db.define('productImg',{
     id:{
-        unique:true,
         autoIncrement:true,
         allowNull:false,
         primaryKey:true,
@@ -25,4 +24,4 @@ const productImg = db.define('productImg',{
 
 });
 
-module.exports = { productImg }
+module.exports = { ProductImg }

@@ -3,14 +3,20 @@ const express = require('express');
 
 
 
-//Controller
+//CONTROLLER
 
-const { newCategory, updateCategory, getCategories } = require('../controllers/products.controller');
+const { newCategory, updateCategory, getCategories, } = require('../controllers/categories.controller');
+const {newProduct, getProducts } = require('../controllers/products.controller');
+
+
+//Middlewares
+
+
 const { authJWT, isAdmin } = require('../middlewares/auth.middleware');
 
 
 
-//Middlewares
+
 
 
 //Router
@@ -36,6 +42,17 @@ productsRouter.patch('/categories/:id',
     isAdmin,
     updateCategory
 )
+
+
+productsRouter.post('/',
+    authJWT,
+    isAdmin,
+    newProduct
+);
+
+productsRouter.get('/',
+    getProducts
+);
 
 
 

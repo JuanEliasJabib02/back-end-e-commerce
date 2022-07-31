@@ -20,9 +20,9 @@ const Product = db.define('product',{
         type: DataTypes.INTEGER,
         allowNull:false,
     },
-    price:{
-        type: DataTypes.FLOAT,
-        allowNull:false,
+    price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
     },
     categoryId:{
         type: DataTypes.INTEGER,

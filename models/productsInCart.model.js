@@ -1,7 +1,7 @@
 const { db , DataTypes } = require('../utils/db.util');
 
 
-const productsInCar = db.define('productsInCar',{
+const ProductInCart = db.define('productInCar',{
     
     id:{
         allowNull:false,
@@ -30,4 +30,4 @@ const productsInCar = db.define('productsInCar',{
 
 });
 
-module.exports = { productsInCar }
+module.exports = { ProductInCart }

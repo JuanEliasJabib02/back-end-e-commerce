@@ -16,8 +16,6 @@ const { User } = require('../models/users.model');
 const { catchAsync } = require("../utils/catchAsync");
 const { Email } = require('../utils/email.util');
 const { AppError } = require('../utils/appError');
-const { response } = require('express');
-
 
 
 const signup = catchAsync(
@@ -28,7 +26,7 @@ const signup = catchAsync(
 
     async (req,res,next) => {
         
-        const {username, email, password, } = req.body;
+        const {username, email, password, role} = req.body;
 
         const salt = await bcrypt.genSalt(12);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -37,6 +35,8 @@ const signup = catchAsync(
             username,
             email,
             password: hashPassword,
+            role,
+            
         })
 
         newUser.password = undefined; // Es de buena practica no enviar la contraseña en la respuesta aunque este escriptada
