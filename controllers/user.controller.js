@@ -12,13 +12,14 @@ const { User } = require('../models/users.model');
 //Utils
 
 const { catchAsync } = require("../utils/catchAsync");
+const { Email } = require('../utils/email.util');
 
 
 
 const signup = catchAsync(
     // user validator -> DONE
     // Hash password and remove from response -> DONE
-    // create new User
+    // create new User -> DONE
     // Send welcome email
 
     async (req,res,next) => {
@@ -35,6 +36,8 @@ const signup = catchAsync(
         })
 
         newUser.password = undefined; // Es de buena practica no enviar la contraseña en la respuesta aunque este escriptada
+
+        new Email().send();
 
         res.status(200).json({
             status:"succes",
