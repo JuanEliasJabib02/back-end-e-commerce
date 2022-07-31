@@ -107,7 +107,7 @@ const getUserProducts = catchAsync(
 const updateUser = catchAsync(
     //Only username and Email
     async (req,res,next) => {
-
+        console.log("updateuser")
     }
 );
 
