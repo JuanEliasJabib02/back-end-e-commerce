@@ -11,7 +11,12 @@ const db = new Sequelize({
     port: process.env.DB_PORT,
     database: process.env.DB,
     logging: false,// Activar si solo se necesita debugear
-  
+    dialectOptions: process.env.NODE_ENV ==='production' ? {
+        ssl: {
+            required:true,
+            rejectUnauthorized:false,
+        }
+    } : {}
 })
 
 module.exports = { db , DataTypes } // Exporto datatypes para usarlo en la creacion de modelos

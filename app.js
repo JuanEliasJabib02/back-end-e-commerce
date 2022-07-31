@@ -2,10 +2,19 @@ const express = require('express');
 const helmet = require('helmet'); /*  Agrega mas seguridad  */
 const compression = require('compression'); /* Nos ayuda a comprimir las responses para un mejor performance */
 const morgan = require('morgan'); /* Nos ayuda a saber que peticiones estan llegando al servidor */
+const path = require('path');
 
 // Init express
 const app = express ();
 app.use(express.json());
+
+// Set template engine 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+
+//Serving static files
+app.use(express.static(path.join(__dirname, 'public'))); // Para que express sirva archivos estaticos para que express siemrpe sepa donde esta public
 
 //Controllers
 
@@ -14,6 +23,8 @@ const { globalErrorHandler } = require('./controllers/error.controller');
 const { AppError } = require('./utils/appError');
 // Routers
 const { usersRouter } = require('./routes/users.routes');
+
+const { viewsRouter } = require('./routes/views.routes')
 
 
 // Add security headers
@@ -29,6 +40,7 @@ else app.use(morgan('combined'));
 
 
 //Endpoints
+app.use('/', viewsRouter)
 app.use('/api/v1/users', usersRouter );
 
 app.all('*',(req,res,next) => {
