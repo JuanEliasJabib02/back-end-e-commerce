@@ -145,6 +145,8 @@ const deleteUser = catchAsync(
 const myOrders = catchAsync(
     // orders done by the user
     async (req,res,next) => {
+        //Inlcude carts
+        //Include purchased products
 
     }
 );
@@ -152,7 +154,9 @@ const myOrders = catchAsync(
 const orderById = catchAsync(
     
     async (req,res,next) => {
-
+        //Inlcude carts
+        //Include purchased products
+        
     }
 );
 

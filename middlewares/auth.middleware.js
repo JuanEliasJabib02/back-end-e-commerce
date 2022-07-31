@@ -11,6 +11,7 @@ const { User } = require('../models/users.model');
 const { catchAsync } = require("../utils/catchAsync");
 
 const {AppError} = require('../utils/appError');
+const { crossOriginResourcePolicy } = require('helmet');
 
 
 const authJWT = catchAsync(
@@ -60,6 +61,18 @@ const userAccount = catchAsync(
     }
 )
 
+const isAdmin = catchAsync(
+    async (req,res,next) => {
+
+        const { userActive } = req;
+
+        if (userActive.role !== 'admin') {
+            return next( new AppError('Only the admin can do this'),403)
+        }
+        next();
+    }
+)
 
 
-module.exports = { authJWT, userAccount }
+
+module.exports = { authJWT, userAccount, isAdmin}

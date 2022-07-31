@@ -24,7 +24,8 @@ const { AppError } = require('./utils/appError');
 // Routers
 const { usersRouter } = require('./routes/users.routes');
 
-const { viewsRouter } = require('./routes/views.routes')
+const { viewsRouter } = require('./routes/views.routes');
+const { productsRouter } = require('./routes/products.routes');
 
 
 // Add security headers
@@ -42,6 +43,8 @@ else app.use(morgan('combined'));
 //Endpoints
 app.use('/', viewsRouter)
 app.use('/api/v1/users', usersRouter );
+
+app.use('/api/v1/products', productsRouter);
 
 app.all('*',(req,res,next) => {
     next( new AppError (`${req.method} ${req.url} not found in this server`),404 )
