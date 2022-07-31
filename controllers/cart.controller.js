@@ -147,7 +147,39 @@ const updateCart = catchAsync(
 const removeProductFromCart = catchAsync(
 
     async (req,res,next) => {
-        console.log("remove product")
+        const { productId } = req.params;
+        const { userActive} = req;
+
+        const cart = Cart.findOne({
+            where:{
+                userId: userActive.id
+            }
+        })
+
+        if (!cart) {
+            return next ( new AppError('cart not found',400));
+        }
+
+        const productInCart = ProductInCart.findOne( 
+        {       cartId: cart.id, 
+                productId, 
+                status:"avalaible"
+        }) 
+
+        ProductInCart.update({
+            status:"removed",
+            quantity:0
+        })
+
+        if (!productInCart) {
+            return next(new AppError('product not found', 400));
+        }
+
+        res.status(200).json({
+            status:"sucess"
+        })
+
+        
     }
 )
 
