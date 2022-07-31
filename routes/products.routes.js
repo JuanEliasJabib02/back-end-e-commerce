@@ -13,7 +13,7 @@ const {newProduct, getProducts, getProductById, updateProduct, deleteProduct } =
 
 
 const { authJWT, isAdmin } = require('../middlewares/auth.middleware');
-const { productExists } = require('../middlewares/products.middleware');
+const { productExists, productOwner } = require('../middlewares/products.middleware');
 const { newProductValidator } = require('../middlewares/validators.middlewares');
 
 
@@ -63,12 +63,16 @@ productsRouter.get('/:id',
 
 
 productsRouter.patch('/:id',
+    authJWT,
     productExists,
+    productOwner,
     updateProduct
 );
 
 productsRouter.delete('/:id',
+    authJWT,
     productExists,
+    productOwner,
     deleteProduct
 );
 

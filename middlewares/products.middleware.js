@@ -26,4 +26,22 @@ const productExists = catchAsync(
     }
 )
 
-module.exports = { productExists }
+
+const productOwner = catchAsync(
+
+    async (req,res,next) => {
+
+        const { product } =req;
+
+        const { userActive } = req;
+
+        if (product.userId !== userActive.id) {
+            return next(new AppError('This product dont belong to you'),400)
+        }
+
+        next();
+
+    }
+)
+
+module.exports = { productExists , productOwner}
