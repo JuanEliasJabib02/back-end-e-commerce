@@ -24,8 +24,6 @@ const newProduct = catchAsync(
             quantity,
             categoryId,
             userId: userActive.id,
-
-            attributes:["title","description","price","quantity"]
         })
 
         res.status(201).json({
@@ -43,9 +41,10 @@ const getProducts = catchAsync(
                 status:"avalaible"
             },
             attributes:["id","title","description","quantity","price"],
-            include:[{
-                model: Category
-            }]
+            include:[
+                { model: Category, attributes: ['name']},
+                { model: User, attributes:['username', "email"]}
+            ]
         })
 
         res.status(200).json({
@@ -57,22 +56,60 @@ const getProducts = catchAsync(
 
 const getProductById = catchAsync(
     async (req,res,next) => {
-        
 
+        const { id } = req.params
+
+        const product = await Product.findOne({
+            where:{
+                status:"avalaible",
+                id
+            },
+            attributes:["id","title","description","price","status"],
+
+            include:[
+                {model:Category, attributes:["name"]}
+            ]
+        })
+
+       res.status(200).json({
+            status:"sucess",
+            product
+       })
     }
 );
 
 const updateProduct = catchAsync(
     async (req,res,next) => {
-        
 
+        const { product}  =req;
+
+        const { newName } = req.body;
+        
+        await product.update({
+            title: newName
+        })
+
+        res.status(200).json({
+            status:"succes"
+        })
     }
 );
 
 const deleteProduct = catchAsync(
+    
     async (req,res,next) => {
-        
+        //soft delete
+        const { product } = req;
 
+        console.log( product )
+
+        await product.update({
+            status:"removed"
+        })
+
+        res.status(200).json({
+            status:"succes"
+        })
     }
 );
 
