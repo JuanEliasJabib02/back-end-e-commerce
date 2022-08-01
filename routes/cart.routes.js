@@ -4,7 +4,7 @@ const express = require('express');
 
 //controller
 
-const { addProduct, updateCart, removeProductFromCart, purchase } = require('../controllers/cart.controller');
+const { addProduct, updateCart, removeProductFromCart, purchase, getCart } = require('../controllers/cart.controller');
 const { authJWT } = require('../middlewares/auth.middleware');
 
 
@@ -33,6 +33,11 @@ cartRouter.delete('/:productId',
 cartRouter.post('/purchase', 
     authJWT,
     purchase
+)
+
+cartRouter.get('/cart-user',
+    authJWT,
+    getCart
 )
 
 module.exports =  { cartRouter }

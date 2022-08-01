@@ -17,7 +17,9 @@ const addProduct = catchAsync(
     async (req,res,next) => {
         
          // 1. ver si el producto esta disponible y la cantidad
-        const {productId , quantity } = req.body;
+        const {productId, quantity } = req.body;
+
+        
 
         const product = await Product.findOne({
             where:{
@@ -59,7 +61,7 @@ const addProduct = catchAsync(
             const productExist = await ProductInCart.findOne({
                 where: {
                     cartId: cart.id,
-                    productid
+                    productId
                 }
             });
 
@@ -179,16 +181,108 @@ const removeProductFromCart = catchAsync(
             status:"sucess"
         })
 
-        
+
     }
 )
 
 const purchase = catchAsync(
 
     async (req,res,next) => {
-        console.log("purshase")
+       
+        const { userActive } = req;
+
+        const cart = await Cart.findOne({
+            where:{
+                userId: userActive.id,
+                status:"active"
+            },
+            include:[
+                {
+                 model: ProductInCart,
+                 required:false,
+                 where:{
+                    status:"active"
+                 },
+                 include:[
+                    {model: Product}
+                 ]
+
+                },
+            ]
+        })
+
+        if (!cart) {
+            return next( new AppError('Cart not found'),400);
+        }
+
+        let totalPrice = 0;
+
+        const productsPurchasedPromises = cart.productInCars.map(async productInCart => {
+
+
+            const newQuantity = productInCart.product.quantity - productInCart.quantity;
+
+            const productPrice = productInCart.product.quantity * +productInCart.price;
+
+            totalPrice = totalPrice + productPrice;
+
+             await productInCart.product.update({
+                quantity: newQuantity,
+            });
+
+            return await productInCart.update({
+                status:"purchased"
+            })
+        });
+
+        await Promise.all(productsPurchasedPromises);
+
+        res.status(200).json({
+            status:"succes",
+            productsPurchasedPromises
+        })
+
+        //send Email
     }
 )
 
+const getCart = catchAsync(
 
-module.exports = { addProduct, removeProductFromCart, updateCart, purchase}
+    async (req,res,next) => {
+
+
+        
+        const { userActive } = req;
+
+        const cart = await Cart.findOne({
+            where:{
+                userId: userActive.id,
+                status:"active"
+            },
+            include:[
+                {
+                 model: ProductInCart,
+                 required:false,
+                 where:{
+                    status:"active"
+                 },
+                 include:[
+                    {model:Product}
+                 ]
+
+                },
+            ]
+        })
+
+        if (!cart) {
+            return next( new AppError('Cart not found'),400);
+        }
+
+        res.status(200).json({
+            status:"succes",
+            cart
+        })
+    }
+)
+
+module.exports = { addProduct, removeProductFromCart, updateCart, purchase, getCart}
