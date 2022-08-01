@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken') // -> Esta libreria nos permite dar el token
 //Models
 
 const { User } = require('../models/users.model');
+const { Order } = require('../models/orders.model');
 
 
 
@@ -16,6 +17,9 @@ const { User } = require('../models/users.model');
 const { catchAsync } = require("../utils/catchAsync");
 const { Email } = require('../utils/email.util');
 const { AppError } = require('../utils/appError');
+const { Cart } = require('../models/carts.model');
+const { Product } = require('../models/products.model');
+const { ProductInCart } = require('../models/productsInCart.model');
 
 
 const signup = catchAsync(
@@ -144,9 +148,41 @@ const deleteUser = catchAsync(
 
 const myOrders = catchAsync(
     // orders done by the user
-    async (req,res,next) => {
-        //Inlcude carts
+     //Inlcude carts
         //Include purchased products
+    async (req,res,next) => {
+
+        const {userActive} =req;
+
+        const orders = await Order.findAll({
+            where:{
+                userId: userActive.id,
+            },
+            
+            include:[{   
+                model: Cart, where:{status:"purchased", userId: userActive.id},
+                attributes:["id"],
+                include:[{
+                    model: ProductInCart, where:{status:"purchased"},attributes:["quantity"],
+                    include:[{
+                        model:Product, attributes:["title","price"]
+                    }]
+                    
+
+                }]
+            }],
+               
+        })
+
+       
+
+        res.status(200).json({
+            status:"succes",
+            orders
+        })
+
+
+       
 
     }
 );

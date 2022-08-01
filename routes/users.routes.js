@@ -46,6 +46,7 @@ usersRouter.delete('/:id',
 
 usersRouter.get('/orders',
     //FINISH THIS
+    authJWT,
     myOrders
 )
 
