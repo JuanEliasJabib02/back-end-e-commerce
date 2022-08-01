@@ -1,10 +1,11 @@
 const { catchAsync } = require("../utils/catchAsync");
 
-const { Cart } = require('../models/carts.model');
-
 //Models
 const { Product } = require("../models/products.model");
 const { ProductInCart } = require("../models/productsInCart.model");
+const { Cart } = require('../models/carts.model');
+const { Order } = require('../models/orders.model')
+
 
 //Utils
 const { AppError } = require("../utils/appError");
@@ -223,9 +224,10 @@ const purchase = catchAsync(
 
             const newQuantity = productInCart.product.quantity - productInCart.quantity;
 
-            const productPrice = productInCart.product.quantity * +productInCart.price;
+            const productPrice = productInCart.quantity * +productInCart.product.price;
 
-            totalPrice = totalPrice + productPrice;
+            totalPrice = totalPrice + productPrice ;
+
 
              await productInCart.product.update({
                 quantity: newQuantity,
@@ -238,6 +240,7 @@ const purchase = catchAsync(
 
         });
 
+
         await Promise.all(productsPurchasedPromises);
 
         await cart.update({
@@ -247,11 +250,16 @@ const purchase = catchAsync(
         //send Email
         await new Email(userActive.email).sendPurchased(productsPurchasedPromises)
 
-        res.status(200).json({
-            status:"succes",
-            productsPurchasedPromises
+        const order = await Order.create({
+            userId: userActive.id,
+            cartId: cart.id,
+            totalPrice: totalPrice
         })
 
+        res.status(200).json({
+            status:"succes",
+            order
+        })
     }
 )
 

@@ -18,7 +18,7 @@ const Order = db.define('order',{
         allowNull:false,
     },
     totalPrice:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull:false,
     },
     status:{
