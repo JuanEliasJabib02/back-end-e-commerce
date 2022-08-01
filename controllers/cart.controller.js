@@ -1,6 +1,6 @@
 const { catchAsync } = require("../utils/catchAsync");
 
-const {Cart} = require('../models/carts.model');
+const { Cart } = require('../models/carts.model');
 
 //Models
 const { Product } = require("../models/products.model");
@@ -8,6 +8,7 @@ const { ProductInCart } = require("../models/productsInCart.model");
 
 //Utils
 const { AppError } = require("../utils/appError");
+const { Email } = require("../utils/email.util");
 
 
 const addProduct = catchAsync(
@@ -233,16 +234,24 @@ const purchase = catchAsync(
             return await productInCart.update({
                 status:"purchased"
             })
+
+
         });
 
         await Promise.all(productsPurchasedPromises);
+
+        await cart.update({
+            status:"purchased",
+        })
+
+        //send Email
+        await new Email(userActive.email).sendPurchased(productsPurchasedPromises)
 
         res.status(200).json({
             status:"succes",
             productsPurchasedPromises
         })
 
-        //send Email
     }
 )
 

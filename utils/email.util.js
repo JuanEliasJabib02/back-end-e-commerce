@@ -52,8 +52,8 @@ class Email {
     }
 
     
-    async sendPurchased(){
-        await this.send('welcome.pug', 'Gracias por tu compra');
+    async sendPurchased(productsPurchasedPromises){
+        await this.send('purchased.pug', 'Gracias por tu compra',{productsPurchasedPromises});
     }
 }
 
