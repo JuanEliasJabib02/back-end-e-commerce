@@ -192,6 +192,30 @@ const orderById = catchAsync(
     async (req,res,next) => {
         //Inlcude carts
         //Include purchased products
+
+        const { id } =req.params;
+
+        const order = await Order.findOne({
+            where:{
+                id,
+            },
+            include:[{
+                model:Cart, attributes:["id"],
+                include:[{
+                    model:ProductInCart, where:{status:"purchased"},attributes:["quantity"],
+                    include:[{
+                        model:Product , attributes:["title","price"]
+                    }]
+                }]
+            }]
+
+            // WORKING THIS
+        })
+
+        res.status(200).json({
+            status:"succes",
+            order
+        })
         
     }
 );
