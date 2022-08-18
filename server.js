@@ -18,5 +18,5 @@ const PORT = process.env.PORT || 4000; // Para que azure pueda hacer deploy tene
 
 
 app.listen(PORT, () => {
-    console.log("Express are working");
+    console.log(`express are runing ${PORT}`);
 });

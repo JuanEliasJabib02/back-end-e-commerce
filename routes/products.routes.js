@@ -17,6 +17,9 @@ const { productExists, productOwner } = require('../middlewares/products.middlew
 const { newProductValidator } = require('../middlewares/validators.middlewares');
 
 
+//Utils
+
+const { upload } = require('../utils/upload.util');
 
 
 
@@ -47,6 +50,7 @@ productsRouter.patch('/categories/:id',
 productsRouter.post('/',
     authJWT,
     newProductValidator,
+    upload.single("productImg"),
     newProduct
 );
 
