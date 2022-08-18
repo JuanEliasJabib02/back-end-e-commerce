@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/44788efa-5136-4753-bde7-85624506075e/microsoft.web/sites/subscriptions/44788efa-5136-4753-bde7-85624506075e/resourceGroups/e-commerce-academlo/providers/Microsoft.Web/sites/e-commerce-academlo",
+    "appService.deploySubpath": "."
+}
