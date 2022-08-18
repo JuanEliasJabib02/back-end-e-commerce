@@ -15,7 +15,7 @@ class Email {
 	// Connect to mail service
 	newTransport() {
 
-		if (process.env.NODE_ENV === "development") {
+		if (process.env.NODE_ENV === "production") {
 			return nodemailer.createTransport({
 				service:'SendGrid',
 				auth: {
