@@ -17,6 +17,9 @@ const newProduct = catchAsync(
 
         const {title , description, price, quantity, categoryId} =req.body
 
+    
+        console.log(req.file);
+
        /*   const product = await Product.create({
             title,
             description,
