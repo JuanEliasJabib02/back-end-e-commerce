@@ -88,12 +88,14 @@ const getProductById = catchAsync(
         
         })
 
-        const imgRef = ref(storage, product.productImgs[0].imgUrl);
-
-        const imgUrlNice = await getDownloadURL(imgRef)
-
-        product.productImgs[0].imgUrl = imgUrlNice;
-
+        const productImgsPromises = product.productImgs.map(async productImg => {
+            const imgRef = ref(storage, productImg.imgUrl);
+            const imgUrlNice = await getDownloadURL(imgRef)
+            productImg.imgUrl = imgUrlNice;
+        })
+        await Promise.all(productImgsPromises);
+        
+       
 
        res.status(200).json({
             status:"sucess",
