@@ -38,6 +38,9 @@ const JWTError = () => {
 	return new AppError('Invalid session. Please login again.', 401);
 };
 
+const productImgLimit = () => {
+	return new AppError('The limit of imgs is 5', 400)
+}
 const globalErrorHandler = (err, req, res, next) => {
 	if (process.env.NODE_ENV === 'development') {
 		sendErrorDev(err, req, res);
@@ -51,6 +54,8 @@ const globalErrorHandler = (err, req, res, next) => {
 			error = JWTExpiredError();
 		} else if (err.name === 'JsonWebTokenError') {
 			error = JWTError();
+		} else if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+			error = productImgLimit();
 		}
 
 		sendErrorProd(error, req, res);

@@ -38,13 +38,13 @@ const newProductValidator = [
       .isFloat({ min: 0 })
       .withMessage('Price must be greater than 0'),
     body('quantity')
-      .isInt({ min: 1 })
+      .isInt({ min: 0 })
       .withMessage('Quantity must be greater than 0'),
     body('categoryId')
       .isInt({ min: 1 })
       .withMessage('Must provide a valid category'),
-      
-      checkResult
+    /*   
+    checkResult */ // BUG WITH PRODUCT ADD
 ]
   
-module.exports = { createUserValidator, newProductValidator }
+module.exports = { createUserValidator, newProductValidator ,}

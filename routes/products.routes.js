@@ -50,7 +50,7 @@ productsRouter.patch('/categories/:id',
 productsRouter.post('/',
     authJWT,
     newProductValidator,
-    upload.single("productImg"),
+    upload.array("productImg", 5),
     newProduct
 );
 

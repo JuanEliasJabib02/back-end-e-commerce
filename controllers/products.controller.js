@@ -16,11 +16,9 @@ const newProduct = catchAsync(
 
         const { userActive } = req;
 
-        const {title , description, price, quantity, categoryId} =req.body
+        const {title , description, price, quantity, categoryId} = req.body
 
-        const imgRef = ref(storage, `products/${Date.now()}_${req.file.originalname}`)
-
-        const imgUpload = await uploadBytes(imgRef, req.file.buffer)
+        
     
          const product = await Product.create({
             title,
@@ -31,11 +29,24 @@ const newProduct = catchAsync(
             userId: userActive.id,
         })
 
-        const url = await ProductImg.create({
-            productId: product.id,
-            imgUrl: imgUpload.metadata.fullPath,
-        })
-  
+
+        //Upload Images
+
+        if(req.files.length > 0) {
+            const filesPromises = req.files.map(async file => {
+                const imgRef = ref(storage, `products/${Date.now()}_${file.originalname}`);
+                const imgUpload = await uploadBytes(imgRef,file.buffer);
+    
+                return await ProductImg.create({
+                productId: product.id,
+                imgUrl: imgUpload.metadata.fullPath,
+            });
+            })
+    
+            await Promise.all(filesPromises);
+        }
+        
+   
         
         res.status(201).json({
             status:"succes",
@@ -80,7 +91,7 @@ const getProductById = catchAsync(
             
 
             include:[
-                {model:ProductImg},
+                {model:ProductImg, attributes:["imgUrl"]},
                 {model:Category, attributes:["name"]},
               
             ]   
@@ -88,13 +99,18 @@ const getProductById = catchAsync(
         
         })
 
-        const productImgsPromises = product.productImgs.map(async productImg => {
-            const imgRef = ref(storage, productImg.imgUrl);
-            const imgUrlNice = await getDownloadURL(imgRef)
-            productImg.imgUrl = imgUrlNice;
-        })
-        await Promise.all(productImgsPromises);
+        //Map Async
+
         
+       
+            const productImgsPromises = product.productImgs.map(async productImg => {
+                const imgRef = ref(storage, productImg.imgUrl);
+                const imgUrlNice = await getDownloadURL(imgRef)
+                productImg.imgUrl = imgUrlNice;
+            })
+            await Promise.all(productImgsPromises);
+            
+       
        
 
        res.status(200).json({
