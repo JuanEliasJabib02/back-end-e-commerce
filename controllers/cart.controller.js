@@ -243,22 +243,51 @@ const purchase = catchAsync(
 
         await Promise.all(productsPurchasedPromises);
 
+        
+
         await cart.update({
             status:"purchased",
         })
 
-        //send Email
-        await new Email(userActive.email).sendPurchased(productsPurchasedPromises)
-
+      
         const order = await Order.create({
             userId: userActive.id,
             cartId: cart.id,
             totalPrice: totalPrice
         })
 
+
+        const orderFinal = await Order.findOne({
+            where:{
+                id: order.id,
+            },
+
+            attributes:["userId", "totalPrice", "status"],
+            
+            include:[
+                {
+                    model:Cart,
+
+                    include:[{
+                        model: ProductInCart, attributes:["status"],
+
+                        include:[{
+                            model: Product
+                        }]
+                    }]
+                }
+            ]
+        })
+
+        const productsForEmail = orderFinal.cart.productInCars
+
+         //send Email
+         await new Email(userActive.email).sendPurchased(productsForEmail)
+
         res.status(200).json({
             status:"succes",
-            order
+            orderFinal
+           
         })
     }
 )

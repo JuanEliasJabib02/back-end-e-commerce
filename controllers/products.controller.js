@@ -100,9 +100,6 @@ const getProductById = catchAsync(
         })
 
         //Map Async
-
-        
-       
             const productImgsPromises = product.productImgs.map(async productImg => {
                 const imgRef = ref(storage, productImg.imgUrl);
                 const imgUrlNice = await getDownloadURL(imgRef)

@@ -43,8 +43,8 @@ const newProductValidator = [
     body('categoryId')
       .isInt({ min: 1 })
       .withMessage('Must provide a valid category'),
-    /*   
-    checkResult */ // BUG WITH PRODUCT ADD
+   
+   /*  checkResult  */
 ]
   
 module.exports = { createUserValidator, newProductValidator ,}

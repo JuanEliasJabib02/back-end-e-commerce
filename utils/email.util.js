@@ -59,12 +59,14 @@ class Email {
 
     // Templates a enviar
     async sendWelcome(username){
-        await this.send('welcome.pug', 'Bienvenido a hideshi', {username});
+        await this.send('welcome.pug', 'Welcome to the E-Commerce', {username});
     }
 
     
-    async sendPurchased(productsPurchasedPromises){
-        await this.send('purchased.pug', 'Gracias por tu compra',{productsPurchasedPromises});
+    async sendPurchased(productsForEmail){
+        await this.send('purchased.pug', 'Gracias por tu compra',{productsForEmail});
+		console.log(productsForEmail[0]);
+		
     }
 }
 
