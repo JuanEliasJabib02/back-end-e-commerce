@@ -49,7 +49,7 @@ productsRouter.patch('/categories/:id',
 
 productsRouter.post('/',
     authJWT,
-   /*  newProductValidator, */
+    newProductValidator,
     upload.single("productImg"),
     newProduct
 );
@@ -59,6 +59,7 @@ productsRouter.get('/',
 );
 
 productsRouter.get('/:id',
+    productExists,
     getProductById
 );
 

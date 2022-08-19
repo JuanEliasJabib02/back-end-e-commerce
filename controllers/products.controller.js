@@ -1,10 +1,11 @@
 
-const { ref, uploadBytes} = require('firebase/storage');
+const { ref, uploadBytes, getDownloadURL} = require('firebase/storage');
 //Models 
 
 const { Category } = require('../models/categories.model');
 const { Product } = require('../models/products.model');
 const { User } = require('../models/users.model');
+const { ProductImg } = require('../models/productImgs.model');
 
 //Utils
 const { catchAsync } = require("../utils/catchAsync");
@@ -17,13 +18,11 @@ const newProduct = catchAsync(
 
         const {title , description, price, quantity, categoryId} =req.body
 
-        const imgRef = ref(storage, `${Date.now()}_${req.file.originalname}`)
+        const imgRef = ref(storage, `products/${Date.now()}_${req.file.originalname}`)
 
         const imgUpload = await uploadBytes(imgRef, req.file.buffer)
     
-        console.log(imgUpload)
-     
-       /*   const product = await Product.create({
+         const product = await Product.create({
             title,
             description,
             price,
@@ -31,10 +30,16 @@ const newProduct = catchAsync(
             categoryId,
             userId: userActive.id,
         })
-  */
+
+        const url = await ProductImg.create({
+            productId: product.id,
+            imgUrl: imgUpload.metadata.fullPath,
+        })
+  
+        
         res.status(201).json({
             status:"succes",
-           /*  product, */
+            product, 
         })
     }
 );
@@ -72,10 +77,23 @@ const getProductById = catchAsync(
             },
             attributes:["id","title","description","price","status"],
 
+            
+
             include:[
-                {model:Category, attributes:["name"]}
-            ]
+                {model:ProductImg},
+                {model:Category, attributes:["name"]},
+              
+            ]   
+
+        
         })
+
+        const imgRef = ref(storage, product.productImgs[0].imgUrl);
+
+        const imgUrlNice = await getDownloadURL(imgRef)
+
+        product.productImgs[0].imgUrl = imgUrlNice;
+
 
        res.status(200).json({
             status:"sucess",
