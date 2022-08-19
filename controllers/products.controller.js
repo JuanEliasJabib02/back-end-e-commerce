@@ -1,5 +1,5 @@
 
-
+const { ref, uploadBytes} = require('firebase/storage');
 //Models 
 
 const { Category } = require('../models/categories.model');
@@ -8,7 +8,7 @@ const { User } = require('../models/users.model');
 
 //Utils
 const { catchAsync } = require("../utils/catchAsync");
-
+const { storage } = require("../utils/firebase.util");
 
 const newProduct = catchAsync(
     async (req,res,next) => {
@@ -17,9 +17,12 @@ const newProduct = catchAsync(
 
         const {title , description, price, quantity, categoryId} =req.body
 
-    
-        console.log(req.file);
+        const imgRef = ref(storage, `${Date.now()}_${req.file.originalname}`)
 
+        const imgUpload = await uploadBytes(imgRef, req.file.buffer)
+    
+        console.log(imgUpload)
+     
        /*   const product = await Product.create({
             title,
             description,
