@@ -19,7 +19,7 @@ const { newProductValidator } = require('../middlewares/validators.middlewares')
 
 //Utils
 
-const { upload } = require('../utils/upload.util');
+const { upload } = require('../utils/upload.util')
 
 
 
@@ -49,7 +49,7 @@ productsRouter.patch('/categories/:id',
 
 productsRouter.post('/',
     authJWT,
-    newProductValidator,
+   /*  newProductValidator, */
     upload.single("productImg"),
     newProduct
 );

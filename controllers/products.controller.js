@@ -17,7 +17,7 @@ const newProduct = catchAsync(
 
         const {title , description, price, quantity, categoryId} =req.body
 
-        const product = await Product.create({
+       /*   const product = await Product.create({
             title,
             description,
             price,
@@ -25,10 +25,10 @@ const newProduct = catchAsync(
             categoryId,
             userId: userActive.id,
         })
-
+  */
         res.status(201).json({
             status:"succes",
-            product,
+           /*  product, */
         })
     }
 );
