@@ -37,12 +37,14 @@ class Email {
 
 	// Send welcome email to user controller for createUser
 	async send(template, subject, mailData) {
+		console.log(mailData.orderFinal.cart)
 
         // What data should
 		const html = pug.renderFile(
 			path.join(__dirname, '..', 'views', 'emails', `${template}`),
 			{
 				mailData,
+				
 			}
 		);
 
@@ -63,9 +65,9 @@ class Email {
     }
 
     
-    async sendPurchased(productsForEmail){
-        await this.send('purchased.pug', 'Gracias por tu compra',{productsForEmail});
-		console.log(productsForEmail[0]);
+    async sendPurchased(orderFinal){
+        await this.send('purchased.pug', 'Gracias por tu compra',{orderFinal});
+		
 		
     }
 }

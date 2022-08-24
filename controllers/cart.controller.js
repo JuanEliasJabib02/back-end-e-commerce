@@ -269,7 +269,7 @@ const purchase = catchAsync(
                     model:Cart,
 
                     include:[{
-                        model: ProductInCart, attributes:["status"],
+                        model: ProductInCart, 
 
                         include:[{
                             model: Product
@@ -279,10 +279,17 @@ const purchase = catchAsync(
             ]
         })
 
-        const productsForEmail = orderFinal.cart.productInCars
+        const productsPurchased = orderFinal.cart.productInCars.map((product) => {
+            console.table(`Product Name:${product.product.title} - Quantity:${product.quantity}`)
+           
+        })
+
+
+    
+
 
          //send Email
-         await new Email(userActive.email).sendPurchased(productsForEmail)
+         await new Email(userActive.email).sendPurchased(orderFinal)
 
         res.status(200).json({
             status:"succes",

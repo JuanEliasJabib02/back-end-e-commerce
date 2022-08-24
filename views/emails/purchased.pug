@@ -1,5 +1,14 @@
 extends base
 
 block emailContent
- p Hi there #{mailData.productsForEmail[0].title},   
- p Thanks for you purchase
+   
+ h3(class= "purchased___title") Thanks for you purchase the total price is: #{mailData.orderFinal.totalPrice}
+
+ ul 
+    div(class="container___product")
+        each product in mailData.orderFinal.cart.productInCars
+            div(class="container___product-card")
+                li Product name: #{product.product.title}
+                li Product Price: #{product.product.price}
+                li Product Quantity: #{product.quantity}
+                
