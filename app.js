@@ -3,10 +3,19 @@ const helmet = require('helmet'); /*  Agrega mas seguridad  */
 const compression = require('compression'); /* Nos ayuda a comprimir las responses para un mejor performance */
 const morgan = require('morgan'); /* Nos ayuda a saber que peticiones estan llegando al servidor */
 const path = require('path');
+const rateLimit = require('express-rate-limit')
 
 // Init express
 const app = express ();
 app.use(express.json());
+
+const limiter = rateLimit({
+    max: 1000, 
+    windowMs: 60 * 60 * 1000, 
+    message: 'Number of request have been exceeded'
+})
+
+app.use(limiter)
 
 // Set template engine 
 app.set('view engine', 'pug');
