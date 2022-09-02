@@ -89,7 +89,7 @@ module.exports = { productsRouter }
  * /api/v1/products/categories:
  *  post:
  *    summary: New Category
- *    tags: [categorys]
+ *    tags: [categories]
  *    requestBody:
  *      required: true
  *      content:
@@ -117,7 +117,51 @@ module.exports = { productsRouter }
  *     - bearerAuth: []
  */
 
+/**
+ * @swagger
+ * /api/v1/products/categories/{id}:
+ *  patch:
+ *    summary: update user
+ *    tags: [categories]
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: integer
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/updateCategory"
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
 
+
+/**
+ * @swagger
+ * /api/v1/products/categories:
+ *  get:
+ *    summary: get open restaurants
+ *    tags: [categories]
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
 
 
 
@@ -125,7 +169,6 @@ module.exports = { productsRouter }
 
 
 // Schemas
-
 
 /**
  * @swagger
@@ -140,4 +183,13 @@ module.exports = { productsRouter }
  *            name:
  *      example:
  *        name: Telephones
+ *    updateCategory:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *          required:
+ *            newName:
+ *      example:
+ *        newName: Computers
  */
