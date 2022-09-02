@@ -98,8 +98,19 @@ const getUserProducts = catchAsync(
     
     async (req,res,next) => {
 
-        
-        
+        const { userActive } = req;
+
+        const products = await Product.findAll({
+            where:{
+                userId: userActive.id,
+                status: "avalaible"
+            }
+        })
+
+      res.status(200).json({
+          status:"succes",
+          products
+      })
     }
 );
 
@@ -141,9 +152,6 @@ const deleteUser = catchAsync(
 );
 
 const myOrders = catchAsync(
-    // orders done by the user
-     //Inlcude carts
-        //Include purchased products
     async (req,res,next) => {
 
         const {userActive} =req;

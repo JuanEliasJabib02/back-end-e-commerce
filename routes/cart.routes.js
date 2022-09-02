@@ -72,6 +72,24 @@ module.exports =  { cartRouter }
  *     - bearerAuth: []
  */
 
+/**
+ * @swagger
+ * /api/v1/cart/purchase:
+ *  post:
+ *    summary: purchase!!
+ *    tags: [cart]
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "succes"
+ *    security:
+ *     - bearerAuth: []
+ */
+
 
 /**
  * @swagger
@@ -100,7 +118,7 @@ module.exports =  { cartRouter }
 
 /**
  * @swagger
- * /api/v1/cart/{productId}:
+ * /api/v1/cart/{id}:
  *  delete:
  *    summary: delete product
  *    tags: [cart]
@@ -120,6 +138,23 @@ module.exports =  { cartRouter }
  *    security:
  *     - bearerAuth: []
  */
+
+
+/**
+ * @swagger
+ * /api/v1/cart/cart-user:
+ *  get:
+ *    summary: get actual user cart
+ *    tags: [cart]
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
+
 
 
 

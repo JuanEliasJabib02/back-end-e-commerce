@@ -155,6 +155,8 @@ const removeProductFromCart = catchAsync(
 
         const {productId} = req.params
 
+        console.log(productId)
+
         const cart = await Cart.findOne({
             where:{
                 userId: userActive.id,

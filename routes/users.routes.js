@@ -26,7 +26,7 @@ usersRouter.post('/login',
 );
 
 usersRouter.get('/me',
-    //FINISH THIS
+    authJWT,
     getUserProducts
 )
 
@@ -45,13 +45,11 @@ usersRouter.delete('/:id',
 );
 
 usersRouter.get('/orders',
-    //FINISH THIS
     authJWT,
     myOrders
 )
 
 usersRouter.get('/orders/:id',
-    //FINISH THIS
     orderById,
     getUserProducts
 )
