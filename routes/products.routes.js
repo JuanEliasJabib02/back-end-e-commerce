@@ -84,6 +84,49 @@ module.exports = { productsRouter }
 
 // Documentation
 
+//products
+
+
+/**
+ * @swagger
+ * /api/v1/products:
+ *  post:
+ *    summary: new  products
+ *    tags: [products]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/products"
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "active"
+ *                  id: 1
+ *                  name: Telephones
+ *                  updatedAt: 2022-08-29T19:20:58.949Z
+ *                  createdAt: 2022-08-29T19:20:58.949Z                     
+ *      400:
+ *        description: Conflict
+ *      500:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
+
+
+
+
+
+
+//Categorys
 /**
  * @swagger
  * /api/v1/products/categories:
@@ -183,13 +226,42 @@ module.exports = { productsRouter }
  *            name:
  *      example:
  *        name: Telephones
+ * 
  *    updateCategory:
  *      type: object
  *      properties:
- *        name:
+ *        newName:
  *          type: string
  *          required:
  *            newName:
  *      example:
  *        newName: Computers
+ * 
+ *    products:
+ *      type: object
+ *      properties:
+ *        title:
+ *          type: string
+ *        description:
+ *          type: string
+ *        price:
+ *          type: decimal
+ *        quantity:
+ *          type: integer
+ *        categoryId:
+ *          type: integer
+ *        productImg:
+ *          type: file
+ *          required:
+ *            title:
+ *            description:
+ *            price:
+ *            quantity:
+ *            categoryId:
+ *      example:
+ *        title: Macbook pro 2022
+ *        description: "Good pc"
+ *        price: 600.60
+ *        quantity: 20
+ *        categoryId: 1
  */

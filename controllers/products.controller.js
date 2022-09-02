@@ -12,14 +12,13 @@ const { catchAsync } = require("../utils/catchAsync");
 const { storage } = require("../utils/firebase.util");
 
 const newProduct = catchAsync(
+
     async (req,res,next) => {
 
         const { userActive } = req;
 
         const {title , description, price, quantity, categoryId} = req.body
 
-        
-    
          const product = await Product.create({
             title,
             description,
