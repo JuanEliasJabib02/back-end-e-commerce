@@ -3,11 +3,22 @@ const helmet = require('helmet'); /*  Agrega mas seguridad  */
 const compression = require('compression'); /* Nos ayuda a comprimir las responses para un mejor performance */
 const morgan = require('morgan'); /* Nos ayuda a saber que peticiones estan llegando al servidor */
 const path = require('path');
-const rateLimit = require('express-rate-limit')
+const rateLimit = require('express-rate-limit');
+const cors = require("cors");
 
 // Init express
 const app = express ();
 app.use(express.json());
+app.use(cors());
+
+//Documentation
+
+//Swagger
+
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const {swaggerSettings} = require("./utils/swagger.util")
+
 
 const limiter = rateLimit({
     max: 1000, 
@@ -57,6 +68,9 @@ app.use('/api/v1/users', usersRouter );
 app.use('/api/v1/products', productsRouter);
 
 app.use('/api/v1/cart', cartRouter );
+
+
+app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSettings)));
 
 app.all('*',(req,res,next) => {
     next( new AppError (`${req.method} ${req.url} not found in this server`),404 )
