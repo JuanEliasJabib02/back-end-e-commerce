@@ -84,8 +84,6 @@ module.exports = { productsRouter }
 
 // Documentation
 
-//products
-
 
 /**
  * @swagger
@@ -211,11 +209,6 @@ module.exports = { productsRouter }
  *    security:
  *     - bearerAuth: []
  */
-
-
-
-
-
 
 
 //Categorys

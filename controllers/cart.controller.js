@@ -63,7 +63,8 @@ const addProduct = catchAsync(
             const productExist = await ProductInCart.findOne({
                 where: {
                     cartId: cart.id,
-                    productId
+                    productId,
+                    status:"active"
                 }
             });
 
@@ -71,7 +72,7 @@ const addProduct = catchAsync(
                 return next( new AppError('product is already in the cart',400))
             }
 
-            ProductInCart.create({
+            await ProductInCart.create({
                 cartId: cart.id,
                 productId,
                 quantity,
@@ -101,7 +102,7 @@ const updateCart = catchAsync(
                  status:"avalaible"
              }
          })
- 
+
          if(!product  ) {
              return next(new AppError('Invalid product',404))
          } else if( newQuantity > product.quantity){
@@ -114,19 +115,18 @@ const updateCart = catchAsync(
                 status:"active"
             }
          })
+
+         console.log(cart)
  
          if(!cart){
             return next( new AppError('cart not found',404));
          }
 
-         const productInCart = await ProductInCart.findOne({
+        const productInCart = await ProductInCart.findOne({
             where:{
-                cartId: cart.id,
-                productId,
-                status:"avalaible"
-
+                cartId: cart.id
             }
-         })
+        })
 
          if (!productInCart) {
             return next( new AppError('product not found in cart'),404)
@@ -149,35 +149,39 @@ const updateCart = catchAsync(
 
 
 const removeProductFromCart = catchAsync(
-
     async (req,res,next) => {
-        const { productId } = req.params;
-        const { userActive} = req;
+        
+        const {userActive} =req;
 
-        const cart = Cart.findOne({
+        const {productId} = req.params
+
+        const cart = await Cart.findOne({
             where:{
-                userId: userActive.id
+                userId: userActive.id,
+                status:"active"
             }
         })
 
-        if (!cart) {
-            return next ( new AppError('cart not found',400));
+        if(!cart){
+            return next( new AppError("cart not found",404));
         }
 
-        const productInCart = ProductInCart.findOne( 
-        {       cartId: cart.id, 
-                productId, 
-                status:"avalaible"
+        const productInCart = await ProductInCart.findOne({
+            where:{
+                cartId: cart.id,
+                productId,
+                status:"active"
+            },
         }) 
 
-        ProductInCart.update({
+        if(!productInCart) {
+            return next (new AppError("product not found"),404);
+        }
+
+        await productInCart.update({
             status:"removed",
             quantity:0
         })
-
-        if (!productInCart) {
-            return next(new AppError('product not found', 400));
-        }
 
         res.status(200).json({
             status:"sucess"
@@ -216,6 +220,13 @@ const purchase = catchAsync(
         if (!cart) {
             return next( new AppError('Cart not found'),400);
         }
+
+        if(cart.productInCars.length <= 0){
+            return next (new AppError("not products in the cart"), 400)
+        }
+
+       
+
 
         let totalPrice = 0;
 
@@ -270,7 +281,7 @@ const purchase = catchAsync(
 
                     include:[{
                         model: ProductInCart, 
-
+                        where:{ status:"purchased"},
                         include:[{
                             model: Product
                         }]
@@ -303,8 +314,6 @@ const getCart = catchAsync(
 
     async (req,res,next) => {
 
-
-        
         const { userActive } = req;
 
         const cart = await Cart.findOne({
@@ -322,7 +331,6 @@ const getCart = catchAsync(
                  include:[
                     {model:Product}
                  ]
-
                 },
             ]
         })

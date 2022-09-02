@@ -9,7 +9,7 @@ const cors = require("cors");
 // Init express
 const app = express ();
 app.use(express.json());
-app.use(cors());
+ app.use(cors()); 
 
 //Documentation
 
@@ -21,7 +21,7 @@ const {swaggerSettings} = require("./docs/swagger.util")
 
 
 const limiter = rateLimit({
-    max: 1000, 
+    max: 100000, 
     windowMs: 60 * 60 * 1000, 
     message: 'Number of request have been exceeded'
 })

@@ -41,3 +41,119 @@ cartRouter.get('/cart-user',
 )
 
 module.exports =  { cartRouter }
+
+
+
+// Documentation
+
+
+/**
+ * @swagger
+ * /api/v1/cart/add-product:
+ *  post:
+ *    summary: add product to cart
+ *    tags: [cart]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/addproduct"
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "succes"
+ *    security:
+ *     - bearerAuth: []
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/cart/update-cart:
+ *  patch:
+ *    summary: update products
+ *    tags: [cart]
+ *    security:
+ *     - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/updateProductCart"
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/cart/{productId}:
+ *  delete:
+ *    summary: delete product
+ *    tags: [cart]
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: integer 
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
+
+
+
+//Schemas
+
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    addproduct:
+ *      type: object
+ *      properties:
+ *        productId:
+ *          type: string
+ *        quantity:
+ *          type: string
+ *          required:
+ *            productId
+ *            quantity
+ *      example:
+ *        productId: 1
+ *        quantity: 1
+ * 
+ *    updateProductCart:
+ *      type: object
+ *      properties:
+ *        productId:
+ *          type: integer
+ *        newQuantity:
+ *          type: integer
+ *      example:
+ *        productId: 1
+ *        newQuantity: 3
+ */
+
