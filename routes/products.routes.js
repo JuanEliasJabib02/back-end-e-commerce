@@ -79,10 +79,65 @@ productsRouter.delete('/:id',
 );
 
 
-
-
-
-
-
 module.exports = { productsRouter }
 
+
+// Documentation
+
+/**
+ * @swagger
+ * /api/v1/products/categories:
+ *  post:
+ *    summary: New Category
+ *    tags: [categorys]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/category"
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "active"
+ *                  id: 1
+ *                  name: Telephones
+ *                  updatedAt: 2022-08-29T19:20:58.949Z
+ *                  createdAt: 2022-08-29T19:20:58.949Z                     
+ *      400:
+ *        description: Conflict
+ *      500:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
+
+
+
+
+
+
+
+// Schemas
+
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    category:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *          required:
+ *            name:
+ *      example:
+ *        name: Telephones
+ */
