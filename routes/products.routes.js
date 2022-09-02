@@ -120,6 +120,98 @@ module.exports = { productsRouter }
  *     - bearerAuth: []
  */
 
+/**
+ * @swagger
+ * /api/v1/products:
+ *  get:
+ *    summary: get products
+ *    tags: [products]
+ *    responses:
+ *      200:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
+
+/**
+ * @swagger
+ * /api/v1/products/{id}:
+ *  get:
+ *    summary: get products by id
+ *    tags: [products]
+ *    parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           schema:
+ *              type: integer
+ *          
+ *    responses:
+ *      200:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/products/{id}:
+ *  patch:
+ *    summary: update products
+ *    tags: [products]
+ *    security:
+ *     - bearerAuth: []
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: integer
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/updateProduct"
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/products/{id}:
+ *  delete:
+ *    summary: delete product
+ *    tags: [products]
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: integer 
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
 
 
 
@@ -264,4 +356,15 @@ module.exports = { productsRouter }
  *        price: 600.60
  *        quantity: 20
  *        categoryId: 1
+ * 
+ *    updateProduct:
+ *      type: object
+ *      properties:
+ *        newName:
+ *          type: string
+ *          required:
+ *            newName:
+ *      example:
+ *        newName: Macbook pro 2022 M1X
+ * 
  */
