@@ -23,10 +23,6 @@ const { ProductInCart } = require('../models/productsInCart.model');
 
 
 const signup = catchAsync(
-    // user validator -> DONE
-    // Hash password and remove from response -> DONE
-    // create new User -> DONE
-    // Send welcome email -> DONE
 
     async (req,res,next) => {
         
@@ -53,10 +49,6 @@ const signup = catchAsync(
             newUser
 
         })
-
-
-
-
     }
 );
 
@@ -105,7 +97,8 @@ const login = catchAsync(
 const getUserProducts = catchAsync(
     
     async (req,res,next) => {
-
+        
+        
     }
 );
 

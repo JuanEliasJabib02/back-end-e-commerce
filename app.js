@@ -17,7 +17,7 @@ app.use(cors());
 
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
-const {swaggerSettings} = require("./utils/swagger.util")
+const {swaggerSettings} = require("./docs/swagger.util")
 
 
 const limiter = rateLimit({

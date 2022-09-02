@@ -57,20 +57,134 @@ usersRouter.get('/orders/:id',
 )
 
 
-
-
-
-
-
-
-
-
-
-
 usersRouter.get('/', 
     getUsers
 );
 
 
-
 module.exports = { usersRouter }
+
+
+// Documentation
+
+/**
+ * @swagger
+ * /api/v1/users:
+ *  post:
+ *    summary: New user
+ *    tags: [users]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/signup"
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "active"
+ *                  id: 1
+ *                  username: juan02
+ *                  email: juaneliasjabib02@gmail.com
+ *                  role: client
+ *                  updatedAt: 2022-08-29T19:20:58.949Z
+ *                  createdAt: 2022-08-29T19:20:58.949Z                     
+ *      400:
+ *        description: Conflict
+ *      500:
+ *        description: Bad request
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/users/login:
+ *  post:
+ *    summary: Login
+ *    tags: [users]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: "#/components/schemas/login"
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              example:
+ *                  status: "active"
+ *                  id: 1
+ *                  username: juan02
+ *                  email: juaneliasjabib02@gmail.com
+ *                  role: client
+ *                  updatedAt: 2022-08-29T19:20:58.949Z
+ *                  createdAt: 2022-08-29T19:20:58.949Z
+ *                       
+ *      400:
+ *        description: Conflict
+ *      500:
+ *        description: Bad request
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Schemas
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    signup:
+ *      type: object
+ *      properties:
+ *        username:
+ *          type: string
+ *        email:
+ *          type: string
+ *        password:
+ *          type: string
+ *        role:
+ *          type: string
+ *          required:
+ *            username
+ *            password
+ *            email
+ *            role
+ *      example:
+ *        username: juan02
+ *        email: juaneliasjabib02@gmail.com
+ *        password: easypass1234
+ *        role: admin
+ *    login:
+ *      type: object
+ *      properties:
+ *        email:
+ *          type: string
+ *        password:
+ *          type: string
+ *          required:
+ *            email
+ *            password
+ *      example:
+ *        email: juaneliasjabib02@gmail.com
+ *        password: easypass1234
+ */
