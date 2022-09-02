@@ -189,6 +189,63 @@ module.exports = { usersRouter }
  */
 
 
+/**
+ * @swagger
+ * /api/v1/users/me:
+ *  get:
+ *    summary: get user products
+ *    tags: [users]
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/orders:
+ *  get:
+ *    summary: get user orders
+ *    tags: [users]
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/orders/{id}:
+ *  get:
+ *    summary: get user order by id
+ *    tags: [users]
+ *    responses:
+ *      204:
+ *        description: Success
+ *      409:
+ *        description: Conflict
+ *      400:
+ *        description: Bad request
+ *    security:
+ *     - bearerAuth: []
+  *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: integer
+ */
+
 
 
 
