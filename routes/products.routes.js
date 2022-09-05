@@ -280,7 +280,7 @@ module.exports = { productsRouter }
  * @swagger
  * /api/v1/products/categories:
  *  get:
- *    summary: get open restaurants
+ *    summary: get categories
  *    tags: [categories]
  *    responses:
  *      204:
