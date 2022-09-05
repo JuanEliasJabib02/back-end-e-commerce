@@ -1,4 +1,6 @@
-const path = require("path")
+const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config( {path:"./config.env"})
 
 
 const swaggerSettings = {
@@ -10,7 +12,7 @@ const swaggerSettings = {
       },
       servers:[
         {
-          url:"http://localhost:4000"
+         url:"https://e-commerce-academlo-2.herokuapp.com/"
         }
       ],
       components: {
