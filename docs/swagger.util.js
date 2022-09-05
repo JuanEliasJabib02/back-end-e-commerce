@@ -12,7 +12,7 @@ const swaggerSettings = {
       },
       servers:[
         {
-         url:"https://e-commerce-academlo-2.herokuapp.com"
+         url:"https://e-commerce-808.herokuapp.com"
         }
       ],
       components: {
