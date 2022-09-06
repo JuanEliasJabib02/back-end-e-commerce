@@ -7,7 +7,7 @@ const swaggerSettings = {
   definition : {
       openapi: "3.0.0",
       info:{
-          title:"E-commerce RestAPI Documentation",
+          title:"E-commerce RestAPI Documentation By: juaneliasjabib02@gmail.com ",
           version:"1.0.0"
       },
       servers:[
